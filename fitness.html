@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>AI Fit Track - Fitness</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f8f4;
+            margin: 0;
+            padding: 30px;
+            text-align: center;
+        }
+
+        nav {
+            background: #1b7f4d;
+            padding: 15px;
+            text-align: center;
+            margin: -30px -30px 30px -30px;
+        }
+
+        nav a {
+            color: white;
+            margin: 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        h1 {
+            color: #16803c;
+        }
+
+        .box {
+            background: white;
+            max-width: 500px;
+            margin: 25px auto;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px #aaa;
+        }
+
+        input[type="number"] {
+            padding: 12px;
+            margin: 8px;
+            width: 80%;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        button {
+            padding: 12px 25px;
+            background: #16803c;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #0d642e;
+        }
+
+        .exercise {
+            margin: 15px;
+            text-align: left;
+        }
+
+        #result,
+        #workoutResult,
+        #exerciseResult,
+        #progressText,
+        #activityResult,
+        #aiRecommendation,
+        #dietRecommendation,
+        #calorieGoalResult,
+        #waterResult {
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        progress {
+            width: 90%;
+            height: 25px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<nav>
+
+    <a href="index.html">🏠 Home</a>
+
+    <a href="fitness.html">🏃 Fitness</a>
+
+    <a href="login.html">🔐 Login</a>
+
+    <a href="index.html" onclick="logoutUser()">🚪 Logout</a>
+
+</nav>
+
+
+<h1>🏃 AI Fit Track</h1>
+
+<p id="welcomeUser"></p>
+
+
+<!-- FITNESS DASHBOARD -->
+
+<div class="dashboard">
+
+    <h2>📊 My Fitness Dashboard</h2>
+
+    <div class="dashboard-grid">
+
+        <div class="dashboard-card">
+            <div class="card-icon">⚖️</div>
+            <h3>BMI</h3>
+            <p id="dashboardBMI">Not calculated</p>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="card-icon">👣</div>
+            <h3>Daily Steps</h3>
+            <p id="dashboardSteps">0</p>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="card-icon">🔥</div>
+            <h3>Calories</h3>
+            <p id="dashboardCalories">0</p>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="card-icon">💧</div>
+            <h3>Water Intake</h3>
+            <p id="dashboardWater">0 L</p>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="card-icon">🏃</div>
+            <h3>Workout</h3>
+            <p id="dashboardWorkout">Not completed</p>
+        </div>
+
+    </div>
+
+</div>
+
+
+<p>Fitness Tracking & BMI Calculator</p>
+
+
+<!-- BMI CALCULATOR -->
+
+<div class="box">
+
+    <h2>⚖️ BMI Calculator</h2>
+
+    <input
+        type="number"
+        id="weight"
+        placeholder="Weight in kg"
+    >
+
+    <input
+        type="number"
+        id="height"
+        placeholder="Height in cm"
+    >
+
+    <br>
+
+    <button onclick="calculateBMI()">
+        Calculate BMI
+    </button>
+
+    <p id="result"></p>
+
+</div>
+
+
+<!-- DAILY WORKOUT -->
+
+<div class="box">
+
+    <h2>💪 Daily Workout Plan</h2>
+
+    <div class="exercise">
+        🏃 Running - 20 Minutes
+        <br>
+        <input type="checkbox" id="running">
+        Completed
+    </div>
+
+    <div class="exercise">
+        🧘 Stretching - 10 Minutes
+        <br>
+        <input type="checkbox" id="stretching">
+        Completed
+    </div>
+
+    <div class="exercise">
+        🏋️ Squats - 15 Repetitions
+        <br>
+        <input type="checkbox" id="squats">
+        Completed
+    </div>
+
+    <button onclick="checkWorkout()">
+        Check Workout
+    </button>
+
+    <p id="workoutResult"></p>
+
+</div>
+
+
+<!-- EXERCISE TRACKING -->
+
+<div class="box">
+
+    <h2>📋 Exercise Tracking</h2>
+
+    <div class="exercise">
+        <input type="checkbox" class="exerciseCheck">
+        Push Ups - 10 Repetitions
+    </div>
+
+    <div class="exercise">
+        <input type="checkbox" class="exerciseCheck">
+        Plank - 30 Seconds
+    </div>
+
+    <div class="exercise">
+        <input type="checkbox" class="exerciseCheck">
+        Lunges - 10 Repetitions
+    </div>
+
+    <button onclick="trackExercise()">
+        Track Exercise
+    </button>
+
+    <p id="exerciseResult"></p>
+
+</div>
+
+
+<!-- WORKOUT PROGRESS -->
+
+<div class="box">
+
+    <h2>📊 Workout Progress</h2>
+
+    <p>Weekly Progress</p>
+
+    <progress
+        id="progressBar"
+        value="0"
+        max="100">
+    </progress>
+
+    <p id="progressText">
+        Progress: 0%
+    </p>
+
+    <button onclick="updateProgress()">
+        Update Progress
+    </button>
+
+</div>
+
+
+<!-- DAILY ACTIVITY -->
+
+<div class="box">
+
+    <h2>🔥 Daily Activity</h2>
+
+    <input
+        type="number"
+        id="steps"
+        placeholder="Daily Steps"
+    >
+
+    <input
+        type="number"
+        id="calories"
+        placeholder="Calories Burned"
+    >
+
+    <br>
+
+    <button onclick="checkActivity()">
+        Check Activity
+    </button>
+
+    <p id="activityResult"></p>
+
+</div>
+
+
+<!-- AI FITNESS RECOMMENDATION -->
+
+<div class="box">
+
+    <h2>🤖 AI Fitness Recommendation</h2>
+
+    <button onclick="getAIRecommendation()">
+        Get Recommendation
+    </button>
+
+    <p id="aiRecommendation"></p>
+
+</div>
+
+
+<!-- DIET RECOMMENDATION -->
+
+<div class="box">
+
+    <h2>🥗 Diet Recommendation</h2>
+
+    <button onclick="getDietRecommendation()">
+        Get Diet Recommendation
+    </button>
+
+    <p id="dietRecommendation"></p>
+
+</div>
+
+
+<!-- DAILY CALORIE GOAL -->
+
+<div class="box">
+
+    <h2>🔥 Daily Calorie Goal</h2>
+
+    <input
+        type="number"
+        id="calorieGoal"
+        placeholder="Enter daily calorie goal"
+    >
+
+    <br>
+
+    <button onclick="setCalorieGoal()">
+        Set Goal
+    </button>
+
+    <p id="calorieGoalResult"></p>
+
+</div>
+
+
+<!-- WATER INTAKE -->
+
+<div class="box">
+
+    <h2>💧 Water Intake Tracker</h2>
+
+    <input
+        type="number"
+        id="water"
+        placeholder="Enter water intake in litres"
+        step="0.1"
+    >
+
+    <br>
+
+    <button onclick="checkWater()">
+        Check Water Intake
+    </button>
+
+    <p id="waterResult"></p>
+    <div class="progress-section">
+    <h3>💧 Water Progress</h3>
+
+    <div class="progress-bar">
+        <div id="waterProgress" class="progress-fill"></div>
+
+
+    <p id="waterProgressText">0%</p>
+</div>
+
+</div>
+
+
+<script>
+
+
+// WELCOME USER
+
+let userName = localStorage.getItem("userName");
+
+if (userName) {
+
+    document.getElementById("welcomeUser").innerHTML =
+        "Welcome, " + userName + " 👋";
+
+}
+
+
+// LOGOUT
+
+function logoutUser() {
+
+    localStorage.removeItem("userName");
+    localStorage.removeItem("userEmail");
+    localStorage.removeItem("userPassword");
+
+}
+
+
+// DASHBOARD
+
+function updateDashboard() {
+
+    let weight =
+        parseFloat(document.getElementById("weight").value);
+
+    let height =
+        parseFloat(document.getElementById("height").value);
+
+    if (!isNaN(weight) && !isNaN(height) && height > 0) {
+
+        let heightMeter = height / 100;
+
+        let bmi =
+            weight / (heightMeter * heightMeter);
+
+        document.getElementById("dashboardBMI").innerHTML =
+            bmi.toFixed(2);
+
+    }
+
+
+    let steps =
+        document.getElementById("steps").value;
+
+    let calories =
+        document.getElementById("calories").value;
+
+    let water =
+        document.getElementById("water").value;
+
+
+    document.getElementById("dashboardSteps").innerHTML =
+        steps || 0;
+
+    document.getElementById("dashboardCalories").innerHTML =
+        calories || 0;
+
+    document.getElementById("dashboardWater").innerHTML =
+        (water || 0) + " L";
+
+}
+
+
+// BMI CALCULATOR
+
+function calculateBMI() {
+
+    let weight =
+        parseFloat(document.getElementById("weight").value);
+
+    let height =
+        parseFloat(document.getElementById("height").value);
+
+
+    if (
+        isNaN(weight) ||
+        isNaN(height) ||
+        weight <= 0 ||
+        height <= 0
+    ) {
+
+        document.getElementById("result").innerHTML =
+            "Please enter valid weight and height.";
+
+        return;
+    }
+
+
+    let heightMeter =
+        height / 100;
+
+    let bmi =
+        weight / (heightMeter * heightMeter);
+
+
+    let category = "";
+
+
+    if (bmi < 18.5) {
+
+        category = "Underweight";
+
+    }
+
+    else if (bmi < 25) {
+
+        category = "Normal Weight";
+
+    }
+
+    else if (bmi < 30) {
+
+        category = "Overweight";
+
+    }
+
+    else {
+
+        category = "Obesity";
+
+    }
+
+
+    document.getElementById("result").innerHTML =
+        "Your BMI is: " +
+        bmi.toFixed(2) +
+        " - " +
+        category;
+
+
+    updateDashboard();
+
+}
+
+
+// DAILY WORKOUT
+
+function checkWorkout() {
+
+    let completed = 0;
+
+
+    if (document.getElementById("running").checked) {
+
+        completed++;
+
+    }
+
+
+    if (document.getElementById("stretching").checked) {
+
+        completed++;
+
+    }
+
+
+    if (document.getElementById("squats").checked) {
+
+        completed++;
+
+    }
+
+
+    document.getElementById("workoutResult").innerHTML =
+        "Workout Progress: " +
+        completed +
+        " / 3 completed";
+
+
+    if (completed === 3) {
+
+        document.getElementById("dashboardWorkout").innerHTML =
+            "Completed ✅";
+
+    }
+
+    else {
+
+        document.getElementById("dashboardWorkout").innerHTML =
+            completed + " / 3 completed";
+
+    }
+
+}
+
+
+// EXERCISE TRACKING
+
+function trackExercise() {
+
+    let exercises =
+        document.querySelectorAll(".exerciseCheck");
+
+
+    let completed = 0;
+
+
+    exercises.forEach(function(exercise) {
+
+        if (exercise.checked) {
+
+            completed++;
+
+        }
+
+    });
+
+
+    document.getElementById("exerciseResult").innerHTML =
+        "Exercises Completed: " +
+        completed +
+        " / " +
+        exercises.length;
+
+}
+
+
+// PROGRESS
+
+function updateProgress() {
+
+    let exercises =
+        document.querySelectorAll(".exerciseCheck");
+
+
+    let completed = 0;
+
+
+    exercises.forEach(function(exercise) {
+
+        if (exercise.checked) {
+
+            completed++;
+
+        }
+
+    });
+
+
+    let progress =
+        (completed / exercises.length) * 100;
+
+
+    document.getElementById("progressBar").value =
+        progress;
+
+
+    document.getElementById("progressText").innerHTML =
+        "Progress: " +
+        progress.toFixed(0) +
+        "%";
+
+}
+
+
+// DAILY ACTIVITY
+
+function checkActivity() {
+
+    let steps =
+        document.getElementById("steps").value;
+
+    let calories =
+        document.getElementById("calories").value;
+
+
+    if (steps === "" || calories === "") {
+
+        document.getElementById("activityResult").innerHTML =
+            "Please enter steps and calories.";
+
+        return;
+
+    }
+
+
+    document.getElementById("activityResult").innerHTML =
+        "👣 Steps: " +
+        steps +
+        " | 🔥 Calories Burned: " +
+        calories;
+
+
+    updateDashboard();
+
+}
+
+
+// AI FITNESS RECOMMENDATION
+
+function getAIRecommendation() {
+
+    let weight =
+        parseFloat(document.getElementById("weight").value);
+
+    let height =
+        parseFloat(document.getElementById("height").value);
+
+
+    if (
+        isNaN(weight) ||
+        isNaN(height) ||
+        height <= 0
+    ) {
+
+        document.getElementById("aiRecommendation").innerHTML =
+            "Please enter your weight and height first.";
+
+        return;
+
+    }
+
+
+    let heightMeter =
+        height / 100;
+
+
+    let bmi =
+        weight / (heightMeter * heightMeter);
+
+
+    let recommendation = "";
+
+
+    if (bmi < 18.5) {
+
+        recommendation =
+            "💪 Focus on nutritious food and strength exercises.";
+
+    }
+
+    else if (bmi < 25) {
+
+        recommendation =
+            "✅ Maintain regular exercise and a balanced diet.";
+
+    }
+
+    else if (bmi < 30) {
+
+        recommendation =
+            "🏃 Try regular cardio exercise and reduce sugary foods.";
+
+    }
+
+    else {
+
+        recommendation =
+            "🥗 Focus on healthy food choices and regular physical activity.";
+
+    }
+
+
+    document.getElementById("aiRecommendation").innerHTML =
+        recommendation;
+
+}
+
+
+// DIET RECOMMENDATION
+
+function getDietRecommendation() {
+
+    let weight =
+        parseFloat(document.getElementById("weight").value);
+
+    let height =
+        parseFloat(document.getElementById("height").value);
+
+
+    if (
+        isNaN(weight) ||
+        isNaN(height) ||
+        height <= 0
+    ) {
+
+        document.getElementById("dietRecommendation").innerHTML =
+            "Please enter your weight and height first.";
+
+        return;
+
+    }
+
+
+    let heightMeter =
+        height / 100;
+
+
+    let bmi =
+        weight / (heightMeter * heightMeter);
+
+
+    let diet = "";
+
+
+    if (bmi < 18.5) {
+
+        diet =
+            "🥛 Include milk, nuts, bananas, eggs and protein-rich foods.";
+
+    }
+
+    else if (bmi < 25) {
+
+        diet =
+            "🥗 Eat vegetables, fruits, whole grains and protein.";
+
+    }
+
+    else if (bmi < 30) {
+
+        diet =
+            "🥦 Choose vegetables, fruits and protein. Reduce sugary and fried foods.";
+
+    }
+
+    else {
+
+        diet =
+            "🥗 Focus on vegetables, fruits, whole grains and lean protein.";
+
+    }
+
+
+    document.getElementById("dietRecommendation").innerHTML =
+        diet;
+
+}
+
+
+// DAILY CALORIE GOAL
+
+function setCalorieGoal() {
+
+    let goal =
+        document.getElementById("calorieGoal").value;
+
+
+    if (goal === "") {
+
+        document.getElementById("calorieGoalResult").innerHTML =
+            "Please enter your calorie goal.";
+
+        return;
+
+    }
+
+
+    document.getElementById("calorieGoalResult").innerHTML =
+        "🔥 Your Daily Calorie Goal: " +
+        goal +
+        " calories";
+
+}
+
+
+// WATER INTAKE
+
+function checkWater() {
+
+    let water =
+        parseFloat(document.getElementById("water").value);
+
+    if (isNaN(water)) {
+
+        document.getElementById("waterResult").innerHTML =
+            "Please enter your water intake.";
+
+        return;
+    }
+
+    if (water < 2) {
+
+        document.getElementById("waterResult").innerHTML =
+            "💧 Try to drink more water throughout the day.";
+
+    }
+
+    else {
+
+        document.getElementById("waterResult").innerHTML =
+            "✅ Good! You have reached 2 litres or more.";
+
+    }
+
+    // Water Progress
+    let progress = (water / 2) * 100;
+
+    if (progress > 100) {
+        progress = 100;
+    }
+
+    document.getElementById("waterProgress").style.width =
+        progress + "%";
+
+    document.getElementById("waterProgressText").innerHTML =
+        "Water Progress: " + progress.toFixed(0) + "%";
+
+    updateDashboard();
+
+}
+
+
+
+</script>
+
+</body>
+</html>

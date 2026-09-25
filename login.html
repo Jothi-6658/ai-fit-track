@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AI Fit Track - Login</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f8f4;
+            margin: 0;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .box {
+            background: white;
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px #aaa;
+        }
+
+        h1 {
+            color: #1b7f4d;
+        }
+
+        input {
+            width: 90%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+        }
+
+        button {
+            padding: 12px 30px;
+            background: #1b7f4d;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #176b42;
+        }
+
+        a {
+            color: #1b7f4d;
+            text-decoration: none;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="box">
+
+        <h1>🏃 AI Fit Track</h1>
+
+        <h2>Login</h2>
+
+        <input
+            type="email"
+            id="email"
+            placeholder="Email"
+        >
+
+        <input
+            type="password"
+            id="password"
+            placeholder="Password"
+        >
+
+        <br>
+
+        <button onclick="loginUser()">
+            Login
+        </button>
+
+        <p id="message"></p>
+
+        <p>
+            Don't have an account?
+            <a href="register.html">Register</a>
+        </p>
+
+    </div>
+
+    <script>
+
+        function loginUser() {
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+
+    let savedEmail = localStorage.getItem("userEmail");
+    let savedPassword = localStorage.getItem("userPassword");
+
+    if (email == "" || password == "") {
+        document.getElementById("message").innerHTML =
+            "Please enter email and password.";
+        return;
+    }
+
+    if (email == savedEmail && password == savedPassword) {
+
+        document.getElementById("message").innerHTML =
+            "✅ Login successful!";
+
+        setTimeout(function() {
+            window.location.href = "fitness.html";
+        }, 1000);
+
+    } else {
+
+        document.getElementById("message").innerHTML =
+            "❌ Invalid email or password.";
+
+    }
+}
+
+    </script>
+
+</body>
+
+</html>
